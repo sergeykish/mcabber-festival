@@ -7,26 +7,12 @@ MCabber Festival
 
 Voice incoming messages
 
-Please set up evironment:
-
-    mkdir -p ~/.mcabber/event_files
-
-And change next in mcabberrc:
-
-    set events_command = ~/.mcabber/event-handler.py
-
-    set event_log_files = 1
-    set event_log_dir = ~/.mcabber/event_files
-
-
-http://github.com/sergeykish/mcabber-festival/tree
-
 """
 
 import sys, os
 import subprocess
 
-CMD_MSG_SAY = 'echo "%s %s!" | festival --tts'
+CMD_MSG_SAY = 'echo "%s %s" | festival_client --async --ttw --aucommand \'aplay $FILE\''
 
 def main(argv):
     if len(argv) < 2:

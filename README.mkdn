@@ -6,6 +6,7 @@ Voice incoming messages
 Please set up evironment:
 
     mkdir -p ~/.mcabber/event_files
+    festival --server
 
 And change next in `mcabberrc`:
 
