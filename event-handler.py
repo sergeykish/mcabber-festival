@@ -1,5 +1,25 @@
 #!/usr/bin/env python
 
+"""
+
+MCabber Festival
+----------------
+
+Voice incoming messages
+
+Please set up evironment:
+
+    mkdir -p ~/.mcabber/event_files
+
+And change next in mcabberrc:
+
+    set events_command = ~/.mcabber/event-handler.py
+
+    set event_log_files = 1
+    set event_log_dir = ~/.mcabber/event_files
+
+"""
+
 import sys, os
 import subprocess
 
@@ -24,7 +44,8 @@ event-handler.py MSG IN test@gmail.com ~/.mcabber/event_files/mcabber-10628.sVg5
         content = f.read()
     os.remove(filename)
 
-    subprocess.call(CMD_MSG_SAY % (arg2, content), shell=True)
+    nick, server = arg2.split('@')
+    subprocess.call(CMD_MSG_SAY % (nick, content), shell=True)
 
 if __name__ == '__main__':
     main(sys.argv)
