@@ -1,0 +1,19 @@
+MCabber Festival
+----------------
+
+Voice incoming messages
+
+Please set up evironment:
+
+    mkdir -p ~/.mcabber/event_files
+
+And change next in `mcabberrc`:
+
+    set events_command = ~/.mcabber/event-handler.py
+
+    set event_log_files = 1
+    set event_log_dir = ~/.mcabber/event_files
+
+Origin:
+
+* [GitHub](http://github.com/sergeykish/mcabber-festival/tree)

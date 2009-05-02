@@ -18,6 +18,9 @@ And change next in mcabberrc:
     set event_log_files = 1
     set event_log_dir = ~/.mcabber/event_files
 
+
+http://github.com/sergeykish/mcabber-festival/tree
+
 """
 
 import sys, os
