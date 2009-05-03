@@ -12,7 +12,8 @@ Voice incoming messages
 import sys, os
 import subprocess
 
-CMD_MSG_SAY = 'echo "%s %s" | festival_client --async --ttw --aucommand \'aplay $FILE\''
+CMD_MSG_SAY = 'echo "%s" | festival_client --async --ttw --aucommand \'aplay $FILE\''
+ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 def main(argv):
     if len(argv) < 2:
@@ -33,8 +34,18 @@ event-handler.py MSG IN test@gmail.com ~/.mcabber/event_files/mcabber-10628.sVg5
         content = f.read()
     os.remove(filename)
 
+    last_filename = os.path.join(ROOT_PATH, 'last_nick')
+    with open(last_filename, 'r') as f:
+        last = f.read()
+
     nick, server = arg2.split('@')
-    subprocess.call(CMD_MSG_SAY % (nick, content), shell=True)
+    message = ('%s ' % nick) if nick != last else ''
+    message += content
+
+    with open(last_filename, 'w') as f:
+        f.write(nick)
+
+    subprocess.call(CMD_MSG_SAY % message, shell=True)
 
 if __name__ == '__main__':
     main(sys.argv)
