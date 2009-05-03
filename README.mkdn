@@ -11,7 +11,7 @@ Please set up evironment:
 
 And change next in `mcabberrc`:
 
-    set events_command = ~/.mcabber/event-handler.py
+    set events_command = ~/.mcabber/speaker.py
 
     set event_log_files = 1
     set event_log_dir = ~/.mcabber/event_files
