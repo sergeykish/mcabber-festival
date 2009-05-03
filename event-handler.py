@@ -15,6 +15,11 @@ import subprocess
 CMD_MSG_SAY = 'echo "%s" | festival_client --async --ttw --aucommand \'aplay $FILE\''
 ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
 
+# russian 'voice_msu_ru_nsh_clunits' doesn't like some symbols, remove it
+def replace_for_russian(text):
+    import re
+    return re.sub(r'[\(\)\?\.\,\\\"\'\[\]\:\;\@\#\$\%\^\&\*\+\>\<\_\/\`\~]', ' ', text)
+
 def main(argv):
     if len(argv) < 2:
         print """ MCabber event-handler, using:
@@ -33,6 +38,8 @@ event-handler.py MSG IN test@gmail.com ~/.mcabber/event_files/mcabber-10628.sVg5
     with file(filename) as f:
         content = f.read()
     os.remove(filename)
+
+    content = replace_for_russian(content)
 
     last_filename = os.path.join(ROOT_PATH, 'last_nick')
     with open(last_filename, 'r') as f:
