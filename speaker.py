@@ -10,15 +10,18 @@ Voice incoming messages
 """
 
 import sys, os
+import re
 import subprocess
 
 CMD_MSG_SAY = 'echo "%s" | festival_client --async --ttw --aucommand \'aplay $FILE\''
 ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 # russian 'voice_msu_ru_nsh_clunits' doesn't like some symbols, remove it
-def replace_for_russian(text):
-    import re
-    return re.sub(r'[\(\)\?\.\,\\\"\'\[\]\:\;\@\#\$\%\^\&\*\+\>\<\_\/\`\~]', ' ', text)
+def replace_bad_symbols(text):
+    return re.sub(r'[\(\)\?\.\,\\\"\'\[\]\:\;\@\#\$\%\^\&\*\+\>\<\_\/\`\~\=]', ' ', text)
+
+def replace_links(text):
+    return re.sub(r'\b(((\S+)?)(@|mailto\:|(news|(ht|f)tp(s?))\://)\S+)\b', 'link', text)
 
 def main(argv):
     if len(argv) < 2:
@@ -39,7 +42,8 @@ event-handler.py MSG IN test@gmail.com ~/.mcabber/event_files/mcabber-10628.sVg5
         content = f.read()
     os.remove(filename)
 
-    content = replace_for_russian(content)
+    content = replace_links(content)
+    content = replace_bad_symbols(content)
 
     last_filename = os.path.join(ROOT_PATH, 'last_nick')
     with open(last_filename, 'r') as f:
